@@ -2,7 +2,7 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
-    "noImplicitAny": true,
+    "noImplicitAny": true
   },
   "extends": "@mate-academy/students-ts-config",
   "include": [

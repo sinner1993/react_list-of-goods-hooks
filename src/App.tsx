@@ -1,6 +1,12 @@
 import React, { useState } from 'react';
 import 'bulma/css/bulma.css';
 import './App.scss';
+enum Cases {
+  Abc = 'abc',
+  Length = 'length',
+  Reverse = 'reverse',
+  EmptyString = '',
+}
 
 export const goodsFromServer: string[] = [
   'Dumplings',
@@ -20,11 +26,11 @@ export const App: React.FC = () => {
   const [reverse, setReverse] = useState<boolean>(false);
   const [active, setActive] = useState<string>('');
 
-  const handleSort = (good: string): void => {
+  const handleSort = (good: Cases): void => {
     let newSort: string[];
 
     switch (good) {
-      case 'abc':
+      case Cases.Abc:
         if (reverse) {
           newSort = [...sort].sort((a, b) => b.localeCompare(a));
           setActive(good);
@@ -34,7 +40,7 @@ export const App: React.FC = () => {
         }
 
         break;
-      case 'length':
+      case Cases.Length:
         if (reverse) {
           newSort = [...sort].sort((a, b) => b.length - a.length);
           setActive(good);
@@ -44,15 +50,15 @@ export const App: React.FC = () => {
         }
 
         break;
-      case 'reverse':
-        if (active === 'abc' || active === 'length') {
+      case Cases.Reverse:
+        if (active === Cases.Abc || active === Cases.Length) {
           setReverse(!reverse);
-        } else if (active === 'reverse') {
+        } else if (active === Cases.Reverse) {
           setReverse(!reverse);
           setActive('');
         } else {
           setReverse(!reverse);
-          setActive('reverse');
+          setActive(Cases.Reverse);
         }
 
         newSort = [...sort].reverse();
@@ -72,7 +78,7 @@ export const App: React.FC = () => {
         <button
           type="button"
           className={`button is-info ${(active !== 'abc' ? 'is-light' : '') || (active !== 'abc' && reverse) ? 'is-light' : ''}`}
-          onClick={() => handleSort('abc')}
+          onClick={() => handleSort(Cases.Abc)}
         >
           Sort alphabetically
         </button>
@@ -80,7 +86,7 @@ export const App: React.FC = () => {
         <button
           type="button"
           className={`button is-success ${(active !== 'length' ? 'is-light' : '') || (active !== 'length' && reverse) ? 'is-light' : ''}`}
-          onClick={() => handleSort('length')}
+          onClick={() => handleSort(Cases.Length)}
         >
           Sort by length
         </button>
@@ -88,7 +94,7 @@ export const App: React.FC = () => {
         <button
           type="button"
           className={`button is-warning ${reverse ? '' : 'is-light'}`}
-          onClick={() => handleSort('reverse')}
+          onClick={() => handleSort(Cases.Reverse)}
         >
           Reverse
         </button>
@@ -96,7 +102,7 @@ export const App: React.FC = () => {
           <button
             type="button"
             className="button is-danger is-light"
-            onClick={() => handleSort('')}
+            onClick={() => handleSort(Cases.EmptyString)}
           >
             Reset
           </button>
